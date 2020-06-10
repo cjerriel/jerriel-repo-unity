@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34d0d7f72aa8fa14787a21d13a8e9f79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eulersPerSecond: {x: 0, y: 0, z: 180}
+  eulersPerSecond: {x: 0, y: 0, z: 360}
 --- !u!114 &114820514969488008
 MonoBehaviour:
   m_ObjectHideFlags: 0
