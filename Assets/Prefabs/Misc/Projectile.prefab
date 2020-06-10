@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4796831387488937090}
   - component: {fileID: 4796831387488937089}
   - component: {fileID: 4796831387488937095}
-  - component: {fileID: 114820514969488008}
+  - component: {fileID: 114641615840843940}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eulersPerSecond: {x: 0, y: 0, z: 360}
---- !u!114 &114820514969488008
+--- !u!114 &114641615840843940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
