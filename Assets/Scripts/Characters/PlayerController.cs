@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using NavGame.Core;
+using NavGame.Managers;
+
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerController : TouchableGameObject
@@ -25,14 +27,16 @@ public class PlayerController : TouchableGameObject
     }
     void Update()
     {
-       ProcessInput();
-       UpdateCollect();
-       UpdateAction();
+        ProcessInput();
+        UpdateCollect();
+        UpdateAction();
     }
     void ProcessInput()
     {
         if (Input.GetMouseButtonDown(1))
         {
+            LevelManager.instance.CancelAtion();
+            actionPoint = Vector3.zero;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -50,7 +54,7 @@ public class PlayerController : TouchableGameObject
                 pickupTarget = null;
             }
         }
-        else if (Input.GetMouseButtonDown(0))
+        else if (Input.GetMouseButtonDown(0) && LevelManager.instance.IsActionSelected())
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -61,12 +65,25 @@ public class PlayerController : TouchableGameObject
                 agent.SetDestination(hit.point);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            LevelManager.instance.SelectedAction(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            LevelManager.instance.SelectedAction(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            LevelManager.instance.SelectedAction(2);
+        }
     }
     void UpdateCollect()
     {
-        if(pickupTarget != null)
+        if (pickupTarget != null)
         {
-            if(IsInTouch(pickupTarget))
+            if (IsInTouch(pickupTarget))
             {
                 pickupTarget.Pickup();
             }
@@ -74,10 +91,14 @@ public class PlayerController : TouchableGameObject
     }
     void UpdateAction()
     {
-        if(Vector3.Distance(transform.position, actionPoint)<= range)
+        if (actionPoint != Vector3.zero)
         {
-            agent.ResetPath();
-            actionPoint = Vector3.zero;
+            if (Vector3.Distance(transform.position, actionPoint) <= range)
+            {
+                agent.ResetPath();
+                LevelManager.instance.DoAction(actionPoint);
+                actionPoint = Vector3.zero;
+            }
         }
     }
 }
