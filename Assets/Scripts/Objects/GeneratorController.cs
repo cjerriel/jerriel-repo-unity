@@ -10,6 +10,7 @@ public class GeneratorController : MonoBehaviour
     public float firstDelay = 5f;
     public float delay = 10f;
     public string generateSound;
+
     void Start()
     {
         StartCoroutine(Generate());
@@ -18,14 +19,14 @@ public class GeneratorController : MonoBehaviour
     IEnumerator Generate()
     {
         yield return new WaitForSeconds(firstDelay);
-        while(true)
+        while (true)
         {
             float offsetx = Random.Range(-0.2f, 0.2f);
             float offsetz = Random.Range(-0.2f, 0.2f);
             Vector3 pos = new Vector3(transform.position.x + offsetx, transform.position.y, transform.position.z + offsetz);
             Instantiate(prefab, pos, Quaternion.identity);
             AudioManager.instance.Play(generateSound, transform.position);
+            yield return new WaitForSeconds(delay);
         }
     }
-
 }
